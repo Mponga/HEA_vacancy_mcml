@@ -122,12 +122,12 @@ for i=1:length(mytemp)
     filename = sprintf('diffusion_%dK.txt', Pars.Temp );
     fileID = fopen(filename,'a');
 
-%     fprintf(fileID,'Starting diffusion simulations\n');
-%     fprintf(fileID,'Number of Cases: %d\n',cases);
-%     fprintf(fileID,'Temperature: %d\n',Pars.Temp);
-%     fprintf(fileID,'Maximum Flips: %d\n',Nflips);
-%     fprintf(fileID,'Limit Time: %12.1f [ns] \n',limit*1e9);
-%     fprintf(fileID,'Critical rate: %12.1f [it/ns] \n',rate_critical);
+     fprintf(fileID,'Starting diffusion simulations\n');
+     fprintf(fileID,'Number of Cases: %d\n',cases);
+     fprintf(fileID,'Temperature: %d\n',Pars.Temp);
+     fprintf(fileID,'Maximum Flips: %d\n',Nflips);
+     fprintf(fileID,'Limit Time: %12.1f [ns] \n',limit*1e9);
+     fprintf(fileID,'Critical rate: %12.1f [it/ns] \n',rate_critical);
 
     fprintf('Starting diffusion simulations\n');
     fprintf('Number of Cases: %d\n',cases);
@@ -314,70 +314,8 @@ if myplots == 1
     end
 
 end
-%% Active swaps
-% actswaps = Pars.actvac.*swap;
-% myswaps = nonzeros(actswaps); 
-% positions = length(myswaps)/2; 
-% swaps(:,1) = myswaps(1:positions);
-% swaps(:,2) = myswaps(positions+1:length(myswaps));
 
-%% Print an output file to read in lammps
-% % VacID = 2551;
-% % 
-% % % Print an NEB replica.
-% % formatSpec = 'hea-genR%d_%dx%dx%d_NEB_%d_NN%d.lmp';
-% % filename = sprintf(formatSpec,best_gen,Pars.Nx,Pars.Ny,Pars.Nz,VacID,0);
-% % 
-% % print_lammps_file([xcoord ycoord zcoord], Pars, best_gen, generations, filename);
-% % 
-% % print_neb_files([xcoord ycoord zcoord], Pars, VacID, best_gen, generations, neighbours, NumNeigh)
-
-%% Generate random vacancy and check their first neighbors
-% 
-% Nvacancies = 1000;
-% AllVacIDs = randsample(Pars.Na,Nvacancies);
-% NN1 = find_nn1([xcoord ycoord zcoord], Pars, AllVacIDs, best_gen, generations, neighbours, NumNeigh);
-% 
-% % Print an NN1 list
-% formatSpec = 'neb_R%d_%dx%dx%d_NEB_%d_.txt';
-% filename = sprintf(formatSpec,best_gen,Pars.Nx,Pars.Ny,Pars.Nz,Nvacancies);
-% fileID = fopen(filename,'w');
-% 
-% for i=1:Nvacancies
-%     fprintf(fileID,'%d ', AllVacIDs(i) );
-%     for j=1:12
-%         fprintf(fileID,'%d ', NN1(i,j) );
-%     end
-%     fprintf(fileID,'\n');
-% end
-% 
-% fclose(fileID);
-
-%% Print a script with all the instructions
-% % 
-% % fileID = fopen('run_auto_neb_script.sh','w');
-% % 
-% % nprocs = 8;
-% % 
-% % % For graham
-% % % 'mpirun -np %d lmp -in neb_script.sh -partition %dx1 -var ID %d -var NN1 %d > output.log'
-% % % For orcinus
-% % % fprintf(fileID,'mpirun -np %d lmp_mpi -partition %dx1 -in neb_script.sh -var ID %d -var NN1 %d\n',nprocs,nprocs,AllVacIDs(i), NN1(i,j));
-% % 
-% % %for i=1:Nvacancies
-% % for i=901:1000 %Nvacancies
-% % 
-% %     
-% %     for j=1:12
-% %         fprintf(fileID,'mpirun -np %d lmp -in in.neb_hea -partition %dx1 -var ID %d -var NN1 %d > output.log\n',nprocs,nprocs,AllVacIDs(i), NN1(i,j));
-% %         fprintf(fileID,'mkdir vacID_%d_NN1_%d\n',AllVacIDs(i), NN1(i,j));
-% %         fprintf(fileID,'mv neb.txt* output.log slurm-* log* screen* vacID_%d_NN1_%d \n',AllVacIDs(i), NN1(i,j));
-% %     end
-% % end
-% % fclose(fileID);
-% % 
-
-% load ML_MC_data.mat
+%% Plot results for manuscript
 
 experiments = [1073 7e-19
        1173 9e-18
@@ -485,124 +423,6 @@ hold on
 semilogy(10000/1500,data_1500K(data_1500K(:,3) == 2,6),'s','Color',colors(2,:),'MarkerFaceColor',colors(2,:))
 semilogy(10000/1500,data_1500K(data_1500K(:,3) == 3,6),'^','Color',colors(3,:),'MarkerFaceColor',colors(3,:))
 semilogy(10000/1500,data_1500K(data_1500K(:,3) == 4,6),'v','Color',colors(4,:),'MarkerFaceColor',colors(4,:))
-%t = tiledlayout(1,1);
-% for i=1:length(data_300K)
-%     if data_300K(i,3) == 1
-%         semilogy(10000/300,data_300K(i,6),'o','Color',colors(1,:),'MarkerFaceColor',colors(1,:))
-%         hold on
-%         
-%     elseif data_300K(i,3) == 2
-%         semilogy(10000/300,data_300K(i,6),'s','Color',colors(2,:),'MarkerFaceColor',colors(2,:))
-%         hold on
-%         
-%     elseif data_300K(i,3) == 3
-%         semilogy(10000/300,data_300K(i,6),'^','Color',colors(3,:),'MarkerFaceColor',colors(3,:))
-%         hold on
-%         
-%     else
-%         semilogy(10000/300,data_300K(i,6),'v','Color',colors(4,:),'MarkerFaceColor',colors(4,:))
-%         hold on
-%         
-%     end
-% end
-
-% for i=1:length(data_450K)
-%     if data_450K(i,3) == 1
-%         semilogy(10000/450,data_450K(i,6),'o','Color',colors(1,:),'MarkerFaceColor',colors(1,:))
-%         hold on
-%     elseif data_450K(i,3) == 2
-%         semilogy(10000/450,data_450K(i,6),'s','Color',colors(2,:),'MarkerFaceColor',colors(2,:))
-%         hold on
-%     elseif data_450K(i,3) == 3
-%         semilogy(10000/450,data_450K(i,6),'^','Color',colors(3,:),'MarkerFaceColor',colors(3,:))
-%         hold on
-%     else
-%         semilogy(10000/450,data_450K(i,6),'v','Color',colors(4,:),'MarkerFaceColor',colors(4,:))
-%         hold on
-%     end
-% end
-% 
-% for i=1:length(data_600K)
-%     if data_600K(i,3) == 1
-%         semilogy(10000/600,data_600K(i,6),'o','Color',colors(1,:),'MarkerFaceColor',colors(1,:))
-%         hold on
-%     elseif data_600K(i,3) == 2
-%         semilogy(10000/600,data_600K(i,6),'s','Color',colors(2,:),'MarkerFaceColor',colors(2,:))
-%         hold on
-%     elseif data_600K(i,3) == 3
-%         semilogy(10000/600,data_600K(i,6),'^','Color',colors(3,:),'MarkerFaceColor',colors(3,:))
-%         hold on
-%     else
-%         semilogy(10000/600,data_600K(i,6),'v','Color',colors(4,:),'MarkerFaceColor',colors(4,:))
-%         hold on
-%     end
-% end
-
-% for i=1:length(data_750K)
-%     if data_450K(i,3) == 1
-%         semilogy(10000/750,data_750K(i,6),'o','Color',colors(1,:),'MarkerFaceColor',colors(1,:))
-%         hold on
-%     elseif data_450K(i,3) == 2
-%         semilogy(10000/750,data_750K(i,6),'s','Color',colors(2,:),'MarkerFaceColor',colors(2,:))
-%         hold on
-%     elseif data_450K(i,3) == 3
-%         semilogy(10000/750,data_750K(i,6),'^','Color',colors(3,:),'MarkerFaceColor',colors(3,:))
-%         hold on
-%     else
-%         semilogy(10000/750,data_750K(i,6),'v','Color',colors(4,:),'MarkerFaceColor',colors(4,:))
-%         hold on
-%     end
-% end
-% 
-% 
-% for i=1:length(data_900K)
-%     if data_900K(i,3) == 1
-%         semilogy(10000/900,data_900K(i,6),'o','Color',colors(1,:),'MarkerFaceColor',colors(1,:))
-%         hold on
-%     elseif data_900K(i,3) == 2
-%         semilogy(10000/900,data_900K(i,6),'s','Color',colors(2,:),'MarkerFaceColor',colors(2,:))
-%         hold on
-%     elseif data_900K(i,3) == 3
-%         semilogy(10000/900,data_900K(i,6),'^','Color',colors(3,:),'MarkerFaceColor',colors(3,:))
-%         hold on
-%     else
-%         semilogy(10000/900,data_900K(i,6),'v','Color',colors(4,:),'MarkerFaceColor',colors(4,:))
-%         hold on
-%     end
-% end
-% 
-% for i=1:length(data_1200K)
-%     if data_1200K(i,3) == 1
-%         semilogy(10000/1200,data_1200K(i,6),'o','Color',colors(1,:),'MarkerFaceColor',colors(1,:))
-%         hold on
-%     elseif data_1200K(i,3) == 2
-%         semilogy(10000/1200,data_1200K(i,6),'s','Color',colors(2,:),'MarkerFaceColor',colors(2,:))
-%         hold on
-%     elseif data_1200K(i,3) == 3
-%         semilogy(10000/1200,data_1200K(i,6),'^','Color',colors(3,:),'MarkerFaceColor',colors(3,:))
-%         hold on
-%     else
-%         semilogy(10000/1200,data_1200K(i,6),'v','Color',colors(4,:),'MarkerFaceColor',colors(4,:))
-%         hold on
-%     end
-% end
-% 
-% for i=1:length(data_1500K)
-%     if data_1500K(i,3) == 1
-%         semilogy(10000/1500,data_1200K(i,6),'o','Color',colors(1,:),'MarkerFaceColor',colors(1,:))
-%         hold on
-%     elseif data_1500K(i,3) == 2
-%         semilogy(10000/1500,data_1200K(i,6),'s','Color',colors(2,:),'MarkerFaceColor',colors(2,:))
-%         hold on
-%     elseif data_1500K(i,3) == 3
-%         semilogy(10000/1500,data_1200K(i,6),'^','Color',colors(3,:),'MarkerFaceColor',colors(3,:))
-%         hold on
-%     else
-%         semilogy(10000/1500,data_1500K(i,6),'v','Color',colors(4,:),'MarkerFaceColor',colors(4,:))
-%         hold on
-%     end
-% end
-% legend('Ni', 'Fe', 'Cr', 'Co')
 
 D01 = 0.1e-5;
 D02 = 0.001e-5;
@@ -615,28 +435,16 @@ semilogy(10000./T,D02*exp(-2.7./(Pars.kb.*T)),'k--','LineWidth',2.0)
 
 semilogy(10000./T,0.1e-6*exp(-2.3./(Pars.kb.*T)),'r-','LineWidth',2.0)
 
-
-% Plot median
-% semilogy(10000./[300 600 900 1200 1500],[median_300K median_600K median_900K median_1200K median_1500K],'r-','LineWidth',2.0)
-
-% semilogy(10000./[300 600 900 1200 1500],[mean_300K mean_600K mean_900K mean_1200K mean_1500K],'k:','LineWidth',2.0)
-
-% D0 = 0.5e-8;
-% semilogy(10000./T,D0*exp(-0.75./(Pars.kb.*T)),'k--','LineWidth',2.0)
-
 semilogy(10000./experiments(:,1),experiments(:,2),'d','Color','b','MarkerFaceColor',colors(6,:),'MarkerSize',10)
 
 axis([5 25 1e-40 1e-10])
 legend(h(1:4));
 legend boxoff
 
-% legend boxoff
 ylabel('Diffusivity [m^2/s]')
 xlabel('10000/T [1/K]')
 set(gca, 'FontSize', 18, 'LineWidth', 2.5)
 grid on
-% h=text(12.5,1e-15,'D_0 = 10^{-8}-10^{-6} [m^2/s]','FontSize',18)
-% set(h,'Rotation',0);
 
 h=text(17.5,5e-22,'E_f = 1.5 eV','FontSize',14)
 set(h,'Rotation',-25);
@@ -645,30 +453,6 @@ set(h,'Rotation',-25);
 h=text(17.5,5e-31,'E_f = 2.7 eV','FontSize',14)
 set(h,'Rotation',-35);
 
-
-% ax2 = axes(t);
-% plot(ax2,10000./[300 600 900 1200 1500],[0 0 0 0 0],'k')
-% ax2.XAxisLocation = 'top';
-% ax2.YAxisLocation = 'right';
-% ax2.Color = 'none';
-% ax1.Box = 'off';
-% ax2.Box = 'off';
-% xticklabels({'2000 K','1500 K', '1200 K', '900K', '600K', '300K'})
-% axis([5 35 1e-25 1e-10])
-
-% % create smaller axes in top right, and plot on it
-% axes('Position',[.7 .5 .2 .2])
-% box on
-% violin(log(data_300K(:,5)))
-
 formatSpec = 'Diffusivity.png';
 figname = sprintf(formatSpec);
 print('-f1',figname,'-dpng')
-
-%% 
-
-edges = [5e-21 7.5e-21 1e-20 2.5e-20 5e-20 7.5e-20 1e-19 2.5e-19 5e-19 7.5e-19 1e-18 2.5e-18 5e-18 7.5e-18 1e-17 2.5e-17 5e-17 7.5e-17 1e-16 2.5e-16 5e-16 7.5e-16 1e-15 2.5e-15 5e-15 7.5e-15 1e-14 2.5e-14 5e-14 7.5e-14 1e-13 2.5e-13 5e-13 7.5e-13 1e-12];
-
-mycounts_1500K = histcounts(data_900K(data_900K(:,3) == 4,6),edges);
-myend = length(edges)-1;
-semilogx(edges(1,1:myend),mycounts_1500K)
